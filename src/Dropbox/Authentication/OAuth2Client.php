@@ -175,6 +175,29 @@ class OAuth2Client
     }
 
     /**
+     * Returns if the access_token is expired.
+     *
+     * @return bool returns True if the access_token is expired
+     */
+    public function isAccessTokenExpired()
+    {
+        $accessToken = $this->getApp()->getAccessToken();
+
+        // If no access token is set return true
+        if (is_null($accessToken)) {
+            return true;
+        }
+
+        if ($accessToken->getExpiryTime() < 0) {
+            return false;
+        }
+
+        // If the token is set to expire in the next 120 seconds.
+        return ($accessToken->getCreated()
+        + ($accessToken->getExpiryTime() - 120)) < time();
+    }
+
+    /**
      * Disables the access token
      *
      * @return void

@@ -81,6 +81,13 @@ class Account extends BaseModel
     protected $account_type;
 
     /**
+     * The root info for this account.
+     *
+     * @var string
+     */
+    protected $root_info;
+
+    /**
      * Create a new Account instance
      *
      * @param array $data
@@ -106,6 +113,8 @@ class Account extends BaseModel
         if (is_array($account_type) && !empty($account_type)) {
             $this->account_type = $account_type['.tag'];
         }
+
+        $this->root_info = $this->getDataProperty('root_info');
     }
 
     /**
@@ -232,5 +241,14 @@ class Account extends BaseModel
     public function getAccountType()
     {
         return $this->account_type;
+    }
+
+    /**
+     * Get Root Info
+     *
+     * @return string
+     */
+    public function getRootInfo() {
+        return $this->root_info;
     }
 }
